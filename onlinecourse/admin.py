@@ -1,23 +1,26 @@
 from django.contrib import admin
-# <HINT> Import any new Models here
 from .models import Course, Lesson, Instructor, Learner, Question, Choice
 
-# <HINT> Register QuestionInline and ChoiceInline classes here
+
 class LessonInline(admin.StackedInline):
     model = Lesson
     extra = 5
 
+
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 3
+
+
 class QuestionInline(admin.StackedInline):
     model = Question
-    extra = 5
+    inlines = [ChoiceInline]
+    extra = 1
 
-class ChoiceInline(admin.StackedInline):
-    model = Question
-    extra = 4
 
 # Register your models here.
 class CourseAdmin(admin.ModelAdmin):
-    inlines = [LessonInline, QuestionInline, ChoiceInline]
+    inlines = [LessonInline, QuestionInline]
     list_display = ('name', 'pub_date')
     list_filter = ['pub_date']
     search_fields = ['name', 'description']
