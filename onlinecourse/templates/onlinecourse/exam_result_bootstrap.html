@@ -60,18 +60,18 @@
     </nav>
 
     <div class="container-fluid">
-      {% if total_score > 8 %}
+      {% if grade > 80 %}
       <div class="alert alert-success">
         <p>
           <strong>Congratulations,{{user.username}}!</strong> You have passed
-          the exam and completed the course with score {{ total_score }}/10.0
+          the exam and completed the course with score {{mark}} / {{total_mark}}
         </p>
       </div>
       {% else %}
       <div class="alert alert-danger">
         <p>
           <strong>Failed</strong>, Sorry {{user.username}}! You have failed the
-          exam with score {{ total_score }}/10.0
+          exam with score {{mark}} / {{total_mark}}
         </p>
       </div>
       <a
@@ -88,20 +88,27 @@
           <div class="card-header">
             <h5>{{ question.question_text }}</h5>
           </div>
+
           <ul class="list-group list-group-flush">
             {% for choice in question.choice_set.all %}
             <li class="list-group-item">
-              <div class="form-check">
-                <!-- Show each choice for the question and mark the correct ones -->
-                {% if choice.is_correct %}
-                <i class="text-success fa fa-check-circle"></i>
-                {% else %}
-                <i class="text-danger fa fa-times-circle"></i>
-                {% endif %}
-                <label class="form-check-label">
-                  {{ choice.choice_text }}
-                </label>
-              </div>
+              {% if choice.is_correct and choice in choices %}
+              <p class="card-text" style="color: green">
+                Correct answer: {{ choice.choice_text }}
+              </p>
+              {% elif choice.is_correct and choice not in choices %}
+              <p class="card-text" style="font-weight: bold; color: gray">
+                Not selected: {{ choice.choice_text }}
+              </p>
+              {% elif choice.is_correct == False and choice in choices %}
+              <p class="card-text" style="color: red">
+                Wrong answer: {{choice.choice_text}}
+              </p>
+              {% else %}
+              <p class="card-text" style="color: black">
+                {{choice.choice_text}}
+              </p>
+              {% endif %}
             </li>
             {% endfor %}
           </ul>

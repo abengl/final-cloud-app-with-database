@@ -117,10 +117,6 @@ class Question(models.Model):
         selected_correct = self.choice_set.filter(
             is_correct=True, id__in=selected_ids).count()
 
-        print("All Answers:", all_answers)
-        print("Selected Correct:", selected_correct)
-        print("Selected IDs:", selected_ids)
-
         if all_answers == selected_correct:
             return True
         else:
