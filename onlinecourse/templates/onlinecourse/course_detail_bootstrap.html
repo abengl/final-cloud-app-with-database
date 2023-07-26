@@ -90,11 +90,13 @@
         Show Exam
       </button>
       <div class="collapse" id="examCollapse">
-        <!-- UPDATE: action {% url 'submit_exam' %} -->
-        <form method="post" action="">
+        <form
+          method="post"
+          action="{% url 'onlinecourse:submit_exam' course.id %}"
+        >
           {% csrf_token %}
           <!-- UPDATE: exam_questions in views -->
-          {% for question in exam_questions %}
+          {% for question in course.question_set.all %}
           <div class="card mt-3">
             <div class="card-header">
               <h5>{{ question.question_text}}</h5>
