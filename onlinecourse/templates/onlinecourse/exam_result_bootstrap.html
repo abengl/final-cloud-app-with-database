@@ -64,14 +64,14 @@
       <div class="alert alert-success">
         <p>
           <strong>Congratulations,{{user.username}}!</strong> You have passed
-          the exam and completed the course with score {{ grade }}
+          the exam and completed the course with score {{ total_score }}
         </p>
       </div>
       {% else %}
       <div class="alert alert-danger">
         <p>
           <strong>Failed</strong>, Sorry {{user.username}}! You have failed the
-          exam with score {{ grade }}
+          exam with score {{ total_score }}
         </p>
       </div>
       <a
@@ -89,7 +89,7 @@
             <h5>{{ question.question_text }}</h5>
           </div>
           <ul class="list-group list-group-flush">
-            {% for choice in question.choices.all %}
+            {% for choice in question.choice_set.all %}
             <li class="list-group-item">
               <div class="form-check">
                 <!-- Show each choice for the question and mark the correct ones -->

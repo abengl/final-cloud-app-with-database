@@ -65,8 +65,8 @@
     </nav>
 
     <!-- Page content -->
-    <div class="container-fluid">
-      <h2>{{ course.name }}</h2>
+    <div class="container-fluid py-3">
+      <h2 class="py-3">{{ course.name }}</h2>
       <div class="card-columns-vertical">
         {% for lesson in course.lesson_set.all %}
         <div class="card mt-1">
@@ -80,7 +80,7 @@
       <!-- Task: show questions and choices -->
       {% if user.is_authenticated %}
       <button
-        class="btn btn-primary"
+        class="btn btn-primary container-fluid my-3"
         type="button"
         data-toggle="collapse"
         data-target="#examCollapse"
@@ -94,19 +94,17 @@
           method="post"
           action="{% url 'onlinecourse:submit_exam' course.id %}"
         >
-          {% csrf_token %}
-          <!-- UPDATE: exam_questions in views -->
-          {% for question in course.question_set.all %}
+          {% csrf_token %} {% for question in course.question_set.all %}
           <div class="card mt-3">
             <div class="card-header">
-              <h5>{{ question.question_text}}</h5>
+              <h6>{{ question.question_text}}</h6>
             </div>
             <ul class="list-group list-group-flush">
-              {% for choice in question.choices.all %}
+              {% for choice in question.choice_set.all %}
               <li class="list-group-item">
                 <div class="form-check">
                   <input
-                    class="form-check-input"
+                    class="form-check-input form-check-input-lg"
                     type="checkbox"
                     name="question_{{ question.id }}_choices"
                     id="choice_{{ choice.id }}"

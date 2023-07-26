@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .models import Course, Enrollment, Question, Choice, Submission
-from .forms import SubmissionForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -104,7 +103,7 @@ def enroll(request, course_id):
 
     return HttpResponseRedirect(reverse(viewname='onlinecourse:course_details', args=(course.id,)))
 
-# Method to collect the selected choices from the exam form from the request object
+# Collects the selected choices from the exam form
 
 
 def extract_answers(request):
@@ -117,14 +116,14 @@ def extract_answers(request):
     return submitted_anwsers
 
 
-# Submit view to create an exam submission record for a course enrollment
+# Submit view
 def submit(request, course_id):
-    # Get user and course object, then get the associated enrollment object created when the user enrolled the course
+    # Get user and course object
     user = request.user
     course = Course.objects.get(id=course_id)
     enrollment = Enrollment.objects.get(user=user, course=course)
 
-    # Create a submission object referring to the enrollment
+    # Create a submission object
     submission = Submission.objects.create(enrollment=enrollment)
 
     # Collect the selected choices from exam form
@@ -141,16 +140,16 @@ def submit(request, course_id):
 
 # Exam result view
 def show_exam_result(request, course_id, submission_id):
-    # Get course and submission based on their ids
+    # Get course and submission
     course = Course.objects.get(id=course_id)
     submission = Submission.objects.get(id=submission_id)
 
-    # Get the selected choice ids from the submission record
+    # Get the selected choice ids
     selected_choice_ids = list(submission.choices.values_list('id', flat=True))
 
     # Calculate the total score
     total_score = 0
-    # For each selected choice, check if it is a correct answer or not
+    # Check if it is a correct answer
     for question in course.question_set.all():
         if question.is_get_score(selected_choice_ids):
             total_score += question.grade
