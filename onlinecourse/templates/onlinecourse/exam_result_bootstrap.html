@@ -60,18 +60,18 @@
     </nav>
 
     <div class="container-fluid">
-      {% if total_score > 80 %}
+      {% if total_score > 8 %}
       <div class="alert alert-success">
         <p>
           <strong>Congratulations,{{user.username}}!</strong> You have passed
-          the exam and completed the course with score {{ total_score }}
+          the exam and completed the course with score {{ total_score }}/10.0
         </p>
       </div>
       {% else %}
       <div class="alert alert-danger">
         <p>
           <strong>Failed</strong>, Sorry {{user.username}}! You have failed the
-          exam with score {{ total_score }}
+          exam with score {{ total_score }}/10.0
         </p>
       </div>
       <a

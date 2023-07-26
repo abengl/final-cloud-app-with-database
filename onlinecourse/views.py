@@ -107,13 +107,15 @@ def enroll(request, course_id):
 
 
 def extract_answers(request):
-    submitted_anwsers = []
+    submitted_answers = []
     for key in request.POST:
         if key.startswith('choice'):
             value = request.POST[key]
             choice_id = int(value)
-            submitted_anwsers.append(choice_id)
-    return submitted_anwsers
+            submitted_answers.append(choice_id)
+
+    print("Submitted Answers:", submitted_answers)
+    return submitted_answers
 
 
 # Submit view
@@ -135,7 +137,7 @@ def submit(request, course_id):
         submission.choices.add(choice)
 
     # Redirect to show_exam_result with the submission id
-    return redirect('show_exam_result', submission_id=submission.id)
+    return redirect('onlinecourse:show_exam_result', course_id=course.id, submission_id=submission.id)
 
 
 # Exam result view
@@ -154,10 +156,13 @@ def show_exam_result(request, course_id, submission_id):
         if question.is_get_score(selected_choice_ids):
             total_score += question.grade
 
+    # Add this line to check the total score
+    print("Total Score:", total_score)
+
     context = {
         'course': course,
         'selected_choice_ids': selected_choice_ids,
         'total_score': total_score,
     }
 
-    return render(request, 'exam_result_bootstrap.html', context)
+    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)

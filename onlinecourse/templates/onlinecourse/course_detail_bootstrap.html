@@ -47,7 +47,7 @@
                 <input
                   type="password"
                   class="form-control"
-                  placeholder="Username"
+                  placeholder="Password"
                   name="psw"
                 />
                 <button class="btn btn-primary" type="submit">Login</button>
@@ -103,15 +103,16 @@
               {% for choice in question.choice_set.all %}
               <li class="list-group-item">
                 <div class="form-check">
-                  <input
+                  <label class="form-check-label" for="choice_{{ choice.id }}"
+                    >
+                    <input
                     class="form-check-input form-check-input-lg"
                     type="checkbox"
-                    name="question_{{ question.id }}_choices"
-                    id="choice_{{ choice.id }}"
+                    name="choice_{{choice.id}}"
+                    id="{{ choice.id }}"
                     value="{{ choice.id }}"
                   />
-                  <label class="form-check-label" for="choice_{{ choice.id }}"
-                    >{{ choice.choice_text }}</label
+                    {{ choice.choice_text }}</label
                   >
                 </div>
               </li>
