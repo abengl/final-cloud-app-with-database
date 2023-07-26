@@ -9,7 +9,7 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="{% url 'onlinecourse:index' %}">Home</a>
@@ -17,10 +17,13 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
           <li>
-            <a class="btn btn-link" href="#"
+            <a class="btn btn-link" href="#" , style="color: white"
               >{{ user.first_name }}({{ user.username }})</a
             >
-            <a class="btn btn-link" href="{% url 'onlinecourse:logout' %}"
+            <a
+              class="btn btn-link"
+              href="{% url 'onlinecourse:logout' %}"
+              style="color: white"
               >Logout</a
             >
           </li>
